@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>OIBSIP Calculator</title>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <main>
+      <!-- Calculator -->
+      <section class="calculator">
+        <!-- Display -->
+        <div class="display">
+          <input
+            type="text"
+            id="display"
+            placeholder="0"
+            readonly
+            autocomplete="off"
+            aria-label="Calculator display"
+          />
+        </div>
+
+        <div class="buttons" role="grid">
+          <button data-action="clear" aria-label="Clear">AC</button>
+          <button data-action="toggle-sign" aria-label="Toggle sign">
+            +/-
+          </button>
+          <button data-action="percent" aria-label="Percentage">%</button>
+          <button data-action="operator" data-value="/" aria-label="Divide">
+            ÷
+          </button>
+
+          <button
+            data-action="number"
+            onclick="uiUpdate()"
+            data-value="7"
+            id="button"
+          >
+            7
+          </button>
+          <button data-action="number" data-value="8">8</button>
+          <button data-action="number" data-value="9">9</button>
+          <button data-action="operator" data-value="*" aria-label="Multiply">
+            ×
+          </button>
+
+          <button data-action="number" data-value="4">4</button>
+          <button data-action="number" data-value="5">5</button>
+          <button data-action="number" data-value="6">6</button>
+          <button data-action="operator" data-value="-" aria-label="Subtract">
+            −
+          </button>
+
+          <button data-action="number" data-value="1">1</button>
+          <button data-action="number" data-value="2">2</button>
+          <button data-action="number" data-value="3">3</button>
+          <button data-action="operator" data-value="+" aria-label="Add">
+            +
+          </button>
+
+          <button data-action="number" data-value="0">0</button>
+          <button data-action="decimal">.</button>
+          <button data-action="equal" aria-label="Calculate">=</button>
+        </div>
+      </section>
+
+      <aside class="history">
+        <h2>Calculation History</h2>
+
+        <ul id="history-list" class="history-list">
+          <li>No calculations yet.</li>
+        </ul>
+      </aside>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>

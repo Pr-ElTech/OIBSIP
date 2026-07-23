@@ -1,0 +1,234 @@
+:root {
+  --primary: #f5f5f5;
+  --secondary: #5f5f5f;
+  --background: #181818;
+  --card: #252525;
+  --text: #ffffff;
+  --operator: #ff9500;
+  --equal: #ff9500;
+  --radius: 20px;
+  --transition: 0.25s ease;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", Arial, Helvetica, sans-serif;
+}
+
+body {
+  background: var(--background);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+main {
+  width: 100%;
+  max-width: 1000px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 2rem;
+}
+
+/* ==========================
+   Calculator
+========================== */
+
+.calculator {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 2rem;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+}
+
+/* ==========================
+   Display
+========================== */
+
+.display {
+  margin-bottom: 1.5rem;
+}
+
+#display {
+  width: 100%;
+  height: 80px;
+  border: none;
+  outline: none;
+  border-radius: 14px;
+  background: #111;
+  color: var(--text);
+  font-size: 2.5rem;
+  text-align: right;
+  padding: 1rem;
+  font-weight: 600;
+}
+
+#display::placeholder {
+  color: rgba(255, 255, 255, 0.35);
+}
+
+/* ==========================
+   Buttons
+========================== */
+
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.buttons button {
+  border: none;
+  outline: none;
+  height: 72px;
+  border-radius: 18px;
+  background: #3b3b3b;
+  color: white;
+  font-size: 1.3rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.buttons button:hover {
+  transform: translateY(-3px);
+  background: #505050;
+}
+
+.buttons button:active {
+  transform: scale(0.96);
+}
+
+/* Number Buttons */
+
+button[data-action="number"],
+button[data-action="decimal"] {
+  background: #3b3b3b;
+}
+
+/* Utility Buttons */
+
+button[data-action="clear"],
+button[data-action="toggle-sign"],
+button[data-action="percent"] {
+  background: #a5a5a5;
+  color: #111;
+}
+
+/* Operator Buttons */
+
+button[data-action="operator"] {
+  background: var(--operator);
+  color: white;
+}
+
+/* Equal Button */
+
+button[data-action="equal"] {
+  background: var(--equal);
+  color: white;
+}
+
+/* Make Zero Button Wider */
+
+button[data-value="0"] {
+  grid-column: span 2;
+}
+
+/* ==========================
+   History
+========================== */
+
+.history {
+  width: 300px;
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+}
+
+.history h2 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.history-list {
+  list-style: none;
+}
+
+.history-list li {
+  padding: 0.8rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  color: #d4d4d4;
+  font-size: 0.95rem;
+}
+
+.history-list li:last-child {
+  border-bottom: none;
+}
+
+/* ==========================
+   Responsive
+========================== */
+
+@media (max-width: 768px) {
+  body {
+    padding: 1rem;
+  }
+
+  main {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .calculator {
+    max-width: 100%;
+  }
+
+  .history {
+    width: 100%;
+    max-width: 420px;
+  }
+
+  #display {
+    font-size: 2rem;
+    height: 70px;
+  }
+
+  .buttons button {
+    height: 65px;
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .calculator {
+    padding: 1.25rem;
+  }
+
+  .history {
+    padding: 1.25rem;
+  }
+
+  .buttons {
+    gap: 0.75rem;
+  }
+
+  .buttons button {
+    height: 60px;
+    border-radius: 14px;
+    font-size: 1rem;
+  }
+
+  #display {
+    font-size: 1.8rem;
+  }
+}
