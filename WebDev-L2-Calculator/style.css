@@ -208,7 +208,15 @@ button[data-value="0"] {
     font-size: 1.1rem;
   }
 }
-
+#clear-history{
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
 @media (max-width: 480px) {
   .calculator {
     padding: 1.25rem;

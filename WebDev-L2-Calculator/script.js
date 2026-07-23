@@ -4,8 +4,9 @@
 
 let currentInput = "";
 let previousInput = "";
-let operator = "";
+let currentOperator = "";
 let history = [];
+let resultDisplayed = false;
 
 // ============================
 // DOM Elements
@@ -28,6 +29,14 @@ function updateDisplay() {
 // ============================
 
 function appendNumber(number) {
+  // Start a new calculation after "="
+  if (resultDisplayed) {
+    currentInput = "";
+    previousInput = "";
+    currentOperator = "";
+    resultDisplayed = false;
+  }
+
   currentInput += number;
   updateDisplay();
 }
@@ -37,13 +46,15 @@ function appendNumber(number) {
 // ============================
 
 function appendDecimal() {
-  if (!currentInput.includes(".")) {
-    if (currentInput === "") {
-      currentInput = "0.";
-    } else {
-      currentInput += ".";
-    }
+  if (resultDisplayed) {
+    currentInput = "0.";
+    resultDisplayed = false;
+    updateDisplay();
+    return;
+  }
 
+  if (!currentInput.includes(".")) {
+    currentInput = currentInput === "" ? "0." : currentInput + ".";
     updateDisplay();
   }
 }
@@ -55,7 +66,22 @@ function appendDecimal() {
 function clearCalculator() {
   currentInput = "";
   previousInput = "";
-  operator = "";
+  currentOperator = "";
+  resultDisplayed = false;
+
+  updateDisplay();
+}
+
+// ============================
+// Backspace
+// ============================
+
+function backspace() {
+  if (resultDisplayed) return;
+
+  if (currentInput === "") return;
+
+  currentInput = currentInput.slice(0, -1);
 
   updateDisplay();
 }
@@ -88,12 +114,15 @@ function percentage() {
 // Choose Operator
 // ============================
 
-function chooseOperator(selectedOperator) {
+function chooseOperator(operator) {
   if (currentInput === "") return;
+
+  // Allow continuing calculation after "="
+  resultDisplayed = false;
 
   previousInput = currentInput;
   currentInput = "";
-  operator = selectedOperator;
+  currentOperator = operator;
 }
 
 // ============================
@@ -104,7 +133,7 @@ function calculate() {
   if (
     previousInput === "" ||
     currentInput === "" ||
-    operator === ""
+    currentOperator === ""
   ) {
     return;
   }
@@ -114,7 +143,7 @@ function calculate() {
 
   let result;
 
-  switch (operator) {
+  switch (currentOperator) {
     case "+":
       result = prev + current;
       break;
@@ -133,7 +162,8 @@ function calculate() {
 
         currentInput = "";
         previousInput = "";
-        operator = "";
+        currentOperator = "";
+        resultDisplayed = false;
 
         return;
       }
@@ -146,14 +176,13 @@ function calculate() {
   }
 
   addToHistory(
-    `${previousInput} ${operator} ${currentInput} = ${result}`
+    `${previousInput} ${currentOperator} ${currentInput} = ${result}`
   );
 
   currentInput = String(result);
-
   previousInput = "";
-
-  operator = "";
+  currentOperator = "";
+  resultDisplayed = true;
 
   updateDisplay();
 }
@@ -163,16 +192,14 @@ function calculate() {
 // ============================
 
 function addToHistory(entry) {
-  history.push(entry);
+  history.unshift(entry);
 
   historyList.innerHTML = "";
 
   history.forEach((item) => {
     const li = document.createElement("li");
-
     li.textContent = item;
-
-    historyList.prepend(li);
+    historyList.appendChild(li);
   });
 }
 
@@ -198,6 +225,10 @@ buttons.forEach((button) => {
         clearCalculator();
         break;
 
+      case "backspace":
+        backspace();
+        break;
+
       case "toggle-sign":
         toggleSign();
         break;
@@ -213,23 +244,24 @@ buttons.forEach((button) => {
       case "equal":
         calculate();
         break;
-
-        case "backspace":
-    backspace();
-    break;
     }
   });
 });
 
-function backspace() {
-  if (currentInput === "") return;
-
-  currentInput = currentInput.slice(0, -1);
-
-  updateDisplay();
-}
 // ============================
 // Initial Display
 // ============================
 
 updateDisplay();
+
+const clearHistoryBtn = document.getElementById("clear-history");
+
+clearHistoryBtn.addEventListener("click", clearHistory);
+
+function clearHistory() {
+    history = [];
+
+    historyList.innerHTML = `
+        <li>No calculations yet.</li>
+    `;
+}
