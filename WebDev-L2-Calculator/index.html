@@ -34,10 +34,8 @@
         </div>
 
         <div class="buttons" role="grid">
+          <button data-action="backspace" aria-label="Backspace">⌫</button>
           <button data-action="clear" aria-label="Clear">AC</button>
-          <button data-action="toggle-sign" aria-label="Toggle sign">
-            +/-
-          </button>
           <button data-action="percent" aria-label="Percentage">%</button>
           <button data-action="operator" data-value="/" aria-label="Divide">
             ÷
@@ -45,7 +43,6 @@
 
           <button
             data-action="number"
-            onclick="uiUpdate()"
             data-value="7"
             id="button"
           >
